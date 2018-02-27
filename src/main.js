@@ -6,6 +6,8 @@ import ElementUI from 'element-ui';
 import axios from 'axios';
 import App from './App';
 import router from './router';
+// import store from './vuex/store';
+import store from './store';
 
 Vue.prototype.$http = axios;
 
@@ -18,6 +20,7 @@ Vue.component('icon', Icon);
 new Vue({
     el: '#app',
     router,
+    store,
     template: '<App/>',
     components: { App },
 });
