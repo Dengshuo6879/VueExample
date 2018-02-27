@@ -10,8 +10,8 @@
 ---
 
 ```bash
-git clone https://github.com/shuiRong/VueCnodeJS.git
-cd VueCnodeJS
+git clone https://github.com/Dengshuo6879/VueExample.git
+cd VueExample
 npm install
 npm run dev
 ```
