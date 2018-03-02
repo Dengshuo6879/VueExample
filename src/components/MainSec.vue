@@ -1,6 +1,6 @@
 <template>
-    <div class='secDiv' v-loading='loading'>
-        <div v-for='item of content' :key='item.id'>
+    <div class='secDiv' v-loading='$store.state.mainSec.loading'>
+        <div v-for='item of $store.state.mainSec.content' :key='item.id'>
             <router-link :to='{name: "UserRoute",params:{name: item.author.loginname}}'>
                 <img :src='item.author.avatar_url' :title='item.author.loginname'>
             </router-link>
@@ -16,122 +16,91 @@
 </template>
 
 <script>
-console.log('Hello,Friend!');
-
+import { mapGetters, mapActions } from "vuex";
 export default {
-    name: 'MainSection',
-    data() {
-        return {
-            content: [],
-            item: {
-                create_at: '2017-02-22T11:32:43.547Z',
-            },
-            limit: 0,
-            loading: true,
-        };
-    },
-    methods: {
-        scrollMethod() {
-            const sumH = document.body.scrollHeight || document.documentElement.scrollHeight;
-            const viewH = document.documentElement.clientHeight;
-            const scrollH = document.body.scrollTop || document.documentElement.scrollTop;
-            if (viewH + scrollH >= sumH) {
-                this.getData();
-            }
-        },
-        getData() {
-            this.limit += 10;
-            this.$http({
-                url: 'https://cnodejs.org/api/v1/topics',
-                method: 'get',
-                params: {
-                    page: 1,
-                    limit: this.limit,
-                    mdrender: 'false',
-                },
-            }).then((res) => {
-                this.content = res.data.data;
-            }).catch((res) => {
-                console.log('MaiSec.vue: ', res);
-            });
-        },
-    },
-    mounted() {
-        window.addEventListener('scroll', this.scrollMethod);
-    },
-    computed: {
-        dealTime() {
-            return String(this.item.create_at).match(/.{10}/)[0];
-        },
-    },
-    created() {
-        this.getData();
-    },
-    watch: {
-        content(val) {
-            if (val) {
-                this.loading = false;
-            }
-        },
-    },
+  name: "MainSection",
+  computed: {
+    ...mapGetters(["item",'loading']),
+    dealTime() {
+      return String(this.item.create_at).match(/.{10}/)[0];
+    }
+  },
+  methods: {
+    ...mapActions(["getData", "scrollMethod"])
+  },
+  mounted() {
+    window.addEventListener("scroll", this.scrollMethod);
+  },
+
+  created() {
+    this.getData();
+    // this.$store.dispatch('getData')  也可行
+  },
+  watch: {
+    content(val) {
+      if (val) {
+        this.loading = false;
+      }
+    }
+  }
 };
 </script>
 
 <style scoped>
 .secDiv {
-    width: 60%;
-    background: #F9FAFC;
-    border: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    font-size: 22px;
-    padding: 2rem;
-    min-height: 40rem;
+  width: 60%;
+  background: #f9fafc;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  font-size: 22px;
+  padding: 2rem;
+  min-height: 40rem;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-.secDiv>div {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 0.5rem 0;
-    border-bottom: 2px solid #C0CCDA;
-    padding-bottom: 1rem;
+.secDiv > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0.5rem 0;
+  border-bottom: 2px solid #c0ccda;
+  padding-bottom: 1rem;
 }
 
-.secDiv>div img {
-    width: 4rem;
-    height: 4rem;
-    margin-right: 2rem;
+.secDiv > div img {
+  width: 4rem;
+  height: 4rem;
+  margin-right: 2rem;
 }
 
 .textDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .textDiv a {
-    color: black;
-    font-size: 25px;
+  color: black;
+  font-size: 25px;
 }
 
 .textDiv a:visited {
-    color: grey;
+  color: grey;
 }
 
 .stuff {
-    font-size: 17px;
-    margin-top: 1rem;
-    color: #8492A6;
+  font-size: 17px;
+  margin-top: 1rem;
+  color: #8492a6;
 }
 
 .stuff span:first-child {
-    margin-right: 2rem;
+  margin-right: 2rem;
 }
 </style>

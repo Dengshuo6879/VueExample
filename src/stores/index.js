@@ -1,13 +1,16 @@
-import * as actions from './actions';
-import * as mutations from './mutations';
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-const state = {
-  count: 0,
-  txt: true,
-}
+import { cnodeHead } from './cnodeHead/index';
+import {mainSec} from './MainSec/index';
 
-export const counterModule = {
-  state,
-  actions,
-  mutations,
-}
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  modules: {
+    cnodeHead,
+    mainSec,
+  }
+})
+
+export default store;

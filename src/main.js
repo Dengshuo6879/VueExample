@@ -6,8 +6,7 @@ import ElementUI from 'element-ui';
 import axios from 'axios';
 import App from './App';
 import router from './router';
-// import store from './vuex/store';
-import store from './store';
+import store from './stores/index';
 
 Vue.prototype.$http = axios;
 
