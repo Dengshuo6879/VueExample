@@ -26,147 +26,128 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-    data() {
-        return {
-            article: {
-                title: '',
-                author: {
-                    loginname: 'temp',
-                },
-                visit_count: '',
-                tab: '',
-                content: '',
-                create_at: '2017-04-130000',
-                replies: '',
-            },
-            loading: true,
-        };
-    },
-    computed: {
-        createdTime() {
-            return String(this.article.create_at).match(/.{10}/)[0];
-        },
-    },
-    methods: {
-        dealCommentTime(time) {
-            return String(time).match(/.{16}/)[0].replace(/.{2}/, '').replace(/[T]/, ' ');
-        },
-    },
-    watch: {
-        article(val) {
-            if (val) {
-                this.loading = false;
-            }
-        },
-    },
-    beforeCreate() {
-        this.$http({
-            url: `https://cnodejs.org/api/v1${this.$route.path}`,
-            method: 'get',
-        }).then((res) => {
-            if (res.data.success === true) {
-                this.article = res.data.data;
-                this.$parent.authorName = this.article.author.loginname;
-            } else {
-                this.article = 'Sorry, Something wrong happened when getting the remote data';
-            }
-        }).catch((res) => {
-            console.log('ArticleCom.vue: ', res);
-        });
-    },
+  name: "ArticleCom",
+
+  computed: {
+    ...mapGetters(['article', 'loading']),
+    createdTime() {
+      return String(this.article.create_at).match(/.{10}/)[0];
+    }
+  },
+  methods: {
+    ...mapActions(["getArticle"]),
+    dealCommentTime(time) {
+      return String(time)
+        .match(/.{16}/)[0]
+        .replace(/.{2}/, "")
+        .replace(/[T]/, " ");
+    }
+  },
+  //   watch: {
+  //     article(val) {
+  //       if (val) {
+  //         this.loading = false;
+  //       }
+  //     }
+  //   },
+  created() {
+    this.getArticle(this);
+    // console.log(this)
+  }
 };
 </script>
 
 <style>
 #content img {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .replySec {
-    box-sizing: border-box;
-    display: flex;
-    border-bottom: 2px solid #C0CCDA;
-    width: 100%;
-    margin: 0.5rem auto;
-    padding: 1rem 0;
+  box-sizing: border-box;
+  display: flex;
+  border-bottom: 2px solid #c0ccda;
+  width: 100%;
+  margin: 0.5rem auto;
+  padding: 1rem 0;
 }
 </style>
 
 <style>
-@import url('../assets/markdown-github.css');
+@import url("../assets/markdown-github.css");
 .marginSpan {
-    margin: 0 0.5rem;
+  margin: 0 0.5rem;
 }
 
 .secDiv span:first-child {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .secDiv {
-    width: 60%;
-    background: #fff;
-    border: 1px solid #ddd;
-    font-size: 20px;
-    padding: 2rem;
-    background: #F9FAFC;
+  width: 60%;
+  background: #fff;
+  border: 1px solid #ddd;
+  font-size: 20px;
+  padding: 2rem;
+  background: #f9fafc;
 }
 
 .secDiv span,
 .secDiv a {
-    font-size: 17px;
-    color: #8492A6;
+  font-size: 17px;
+  color: #8492a6;
 }
 
 .secDiv a {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 #content {
-    margin: 2rem auto 2rem auto;
-    padding: 2rem 1rem 2rem 1rem;
-    border: 1px solid #ddd;
-    line-height: 1.6;
-    padding-bottom: 1rem;
-    background: #EFF2F7;
+  margin: 2rem auto 2rem auto;
+  padding: 2rem 1rem 2rem 1rem;
+  border: 1px solid #ddd;
+  line-height: 1.6;
+  padding-bottom: 1rem;
+  background: #eff2f7;
 }
 
 #reply {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 #reply img {
-    width: 5rem;
-    height: 5rem;
-    margin-right: 1rem;
+  width: 5rem;
+  height: 5rem;
+  margin-right: 1rem;
 }
 
-.replySec>div {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 1rem;
-    justify-content: space-around;
+.replySec > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 1rem;
+  justify-content: space-around;
 }
 
 .replySec p {
-    color: black;
+  color: black;
 }
 
 .replyUp {
-    width: 100%;
+  width: 100%;
 }
 
 .replySec .replyName {
-    color: #475669;
-    font-size: 20px;
+  color: #475669;
+  font-size: 20px;
 }
 
 .secDiv .thumbsClass {
-    float: right;
+  float: right;
 }
 </style>

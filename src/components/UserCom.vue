@@ -45,136 +45,131 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-    data() {
-        return {
-            userInfo: {
-                create_at: '2017-03-20',  //预设默认值：因为Vue会在一系列的初试化过程中调用此数据多次，而此时还有axios还没有执行到。如果没有默认值的话，会因为dealCommentTime中的方法保错：  0 of undefined....
-            },
-            loading: true,
-        };
-    },
-    created() {
-        this.$http({
-            url: `https://cnodejs.org/api/v1${this.$route.path}`,
-            method: 'get',
-        }).then((res) => {
-            this.userInfo = res.data.data;
-        }).catch((res) => {
-            console.log('UserCom.vue: ', res);
-        });
-    },
-    methods: {
-        dealCommentTime(time) {
-            return String(time).match(/.{10}/)[0].replace(/.{2}/, '').replace(/[T]/, ' ');
-        },
-    },
-    beforeRouteUpdate(to, from, next) {
-        this.$http({
-            url: `https://cnodejs.org/api/v1${to.path}`,
-            method: 'get',
-        }).then((res) => {
-            this.userInfo = res.data.data;
-        }).catch((res) => {
-            console.log('UserCom.vue: ', res);
-        });
-        next();
-    },
-    watch: {
-        userInfo(val) {
-            if (val) {
-                this.loading = false;
-            }
-        },
-    },
+  computed: {
+    ...mapGetters(["userInfo", "loading"])
+  },
+  methods: {
+    ...mapActions(["getUser"]),
+    dealCommentTime(time) {
+      return String(time)
+        .match(/.{10}/)[0]
+        .replace(/.{2}/, "")
+        .replace(/[T]/, " ");
+    }
+  },
+  created() {
+    this.getUser(this.$route.path);
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.$http({
+      url: `https://cnodejs.org/api/v1${to.path}`,
+      method: "get"
+    })
+      .then(res => {
+        this.userInfo = res.data.data;
+      })
+      .catch(res => {
+        console.log("UserCom.vue: ", res);
+      });
+    next();
+  },
+  watch: {
+    userInfo(val) {
+      if (val) {
+        this.loading = false;
+      }
+    }
+  }
 };
 </script>
 
 <style scoped>
 .secDiv {
-    padding: 0;
-    box-sizing: border-box;
-    border: none;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
 }
 
 .profile {
-    padding: 1rem;
-    background: #EFF2F7;
-    border-radius: 0.3rem;
+  padding: 1rem;
+  background: #eff2f7;
+  border-radius: 0.3rem;
 }
 
 .profile div {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .profile div span {
-    font-size: 25px;
-    color: black;
-    margin-left: 1rem;
+  font-size: 25px;
+  color: black;
+  margin-left: 1rem;
 }
 
 .profile p {
-    display: flex;
-    align-items: center;
-    color: grey;
-    margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  color: grey;
+  margin: 0.5rem 0;
 }
 
 .profile p span {
-    margin: 0 0.5rem;
-    color: black;
+  margin: 0 0.5rem;
+  color: black;
 }
 
 .profile svg {
-    color: black;
-    margin-left: 0.2rem;
+  color: black;
+  margin-left: 0.2rem;
 }
 
 .recentTopics img,
 .recentReplies img {
-    width: 5rem;
-    height: 5rem;
+  width: 5rem;
+  height: 5rem;
 }
 
-.recentTopics>p,
-.recentReplies>p {
-    margin-bottom: 1rem;
-    color: black;
-    padding-bottom: 1.5rem;
+.recentTopics > p,
+.recentReplies > p {
+  margin-bottom: 1rem;
+  color: black;
+  padding-bottom: 1.5rem;
 }
 
 .userTitle {
-    font-size: 25px;
+  font-size: 25px;
 }
 
 .recentTopics {
-    padding: 1rem;
-    background: #D3DCE6;
-    border-radius: 0.3rem;
+  padding: 1rem;
+  background: #d3dce6;
+  border-radius: 0.3rem;
 }
 
 .recentReplies {
-    background: #E5E9F2;
-    padding: 1rem;
-    margin: 1rem 0;
-    border-radius: 0.3rem;
+  background: #e5e9f2;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.3rem;
 }
 
 .recentReplies div,
 .recentTopics div {
-    display: flex;
-    align-items: center;
-    margin: 1rem 0;
-    border-bottom: 2px solid #C0CCDA;
-    padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  border-bottom: 2px solid #c0ccda;
+  padding-bottom: 1rem;
 }
 
 .recentTopics div {
-    border-bottom: 2px solid #99A9BF;
+  border-bottom: 2px solid #99a9bf;
 }
 
 .recentReplies div img,
 .recentTopics div img {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 </style>

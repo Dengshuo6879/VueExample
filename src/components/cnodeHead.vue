@@ -43,6 +43,7 @@ export default {
   mounted() {
     // console.log(this.computed)
     // console.log(mapGetters());
+    // this.$router.push('/user/atian25')
   }
 };
 </script>

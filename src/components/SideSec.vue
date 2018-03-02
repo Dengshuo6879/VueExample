@@ -14,73 +14,64 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-    name: 'SideSection',
-    data() {
-        return {
-            userInfo: {
-                avatar_url: '',
-                loginname: 'temp',
-            },
-            loading: true,
-            name: '',
-        };
-    },
-    watch: {
-        userInfo(val) {
-            if (val) {
-                this.loading = false;
-            }
-        },
-        name(val) {
-            this.$http({
-                url: `https://cnodejs.org/api/v1/user/${val}`,
-                method: 'get',
-            }).then((res) => {
-                this.userInfo = res.data.data;
-            }).catch((res) => {
-                console.log('SideSec.vue :', res);
-            });
-        },
-    },
+  name: "SideSection",
+  data() {
+    return {
+      name: ""
+    };
+  },
+  computed: {
+    ...mapGetters(["userInfo","loading"]),
+  },
+  methods: {
+    ...mapActions(["getUser"]),
+  },
+
+  watch: {
+    name(val) {
+      this.getUser(val);
+    }
+  }
 };
 </script>
 
 <style scoped>
 .secDiv {
-    width: 20%;
-    height: 20rem;
-    background: #E5E9F2;
-    border: 1px solid #ddd;
-    word-break: break-all;
-    font-size: 21px;
-    padding: 2rem;
+  width: 20%;
+  height: 20rem;
+  background: #e5e9f2;
+  border: 1px solid #ddd;
+  word-break: break-all;
+  font-size: 21px;
+  padding: 2rem;
 }
 
 .secDiv div {
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 2rem;
 }
 
 .secDiv div span {
-    font-size: 30px;
-    margin-left: 1rem;
-    color: black;
+  font-size: 30px;
+  margin-left: 1rem;
+  color: black;
 }
 
 .secDiv p {
-    display: flex;
-    align-items: center;
-    color: #475669;
+  display: flex;
+  align-items: center;
+  color: #475669;
 }
 
 .secDiv p svg {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 
 img {
-    width: 6rem;
-    height: 6rem;
+  width: 6rem;
+  height: 6rem;
 }
 </style>

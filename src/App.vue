@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import cnodeHead from './components/cnodeHead';
+import cnodeHead from './components/CnodeHead';
 
 export default {
     name: 'app',
