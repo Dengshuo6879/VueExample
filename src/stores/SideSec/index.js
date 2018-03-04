@@ -20,7 +20,7 @@ const mutations = {
   GETUSER(state, { _username }){
     state.loading = true;
     axios({
-      url: `https://cnodejs.org/api/v1/${_username}`,
+      url: `https://cnodejs.org/api/v1/user/${_username}`,
       method: 'get',
     }).then((res)=>{
       state.userInfo = res.data.data
