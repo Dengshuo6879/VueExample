@@ -1,5 +1,5 @@
 <template>
-    <div class='secDiv' v-loading.lock='$store.state.articleCom.loading'>
+    <div class='secDiv' v-loading.lock='loading'>
         <span class='marginSpan'>发布于：{{createdTime}}</span>
         <router-link :to='{name:"UserRoute",params:{name: article.author.loginname}}'>作者：{{article.author.loginname}}</router-link>
         <span class='marginSpan'>浏览量：{{article.visit_count}}</span>
@@ -31,7 +31,15 @@ export default {
   name: "ArticleCom",
 
   computed: {
-    ...mapGetters(['article']),
+    ...mapGetters(["article"]),
+    loading: {
+      get: function() {
+        return this.$store.state.articleCom.loading;
+      },
+      set: function(newValue) {
+        this.$store.state.articleCom.loading = newValue;
+      }
+    },
     createdTime() {
       return String(this.article.create_at).match(/.{10}/)[0];
     }

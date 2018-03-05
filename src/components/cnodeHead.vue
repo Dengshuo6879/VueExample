@@ -4,7 +4,8 @@
             <img src='../assets/cnodejs.svg' title='cnodejs.svg'>
         </router-link>
         <el-button type='text' @click='changeDialogVisible'>关于</el-button>
-        <el-dialog title='Vue.js重写CnodeJS社区' v-model='$store.state.cnodeHead.dialogVisible' size='tiny'>
+        <!-- <el-dialog title='Vue.js重写CnodeJS社区' v-model='$store.state.cnodeHead.dialogVisible' size='tiny'> -->
+        <el-dialog title='Vue.js重写CnodeJS社区' v-model='dialogVisible' size='tiny'>
             <div class='dialogDiv'>
                 <span>
                     <strong>作者: &nbsp;&nbsp;</strong>
@@ -37,14 +38,22 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
-   ...mapGetters(['dialogVisible'])
+    ...mapGetters(["dialogVisible"]),
+    dialogVisible:{
+      get:function(){
+        return this.$store.state.cnodeHead.dialogVisible;
+      },
+      set:function(newValue){
+        this.$store.state.cnodeHead.dialogVisible = newValue;
+      }
+    }
   },
   methods: mapActions(["changeDialogVisible"]),
   mounted() {
     // console.log(this.computed)
     // console.log(mapGetters());
     // this.$router.push('/user/atian25')
-  }
+  },
 };
 </script>
 

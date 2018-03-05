@@ -5,6 +5,7 @@ import { cnodeHead } from './CnodeHead/index';
 import { mainSec } from './MainSec/index';
 import { articleCom } from './ArticleCom/index';
 import { sideSec } from './SideSec/index';
+import { userCom } from './UserCom/index';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ const store = new Vuex.Store({
     mainSec,
     articleCom,
     sideSec,
+    userCom,
   }
 })
 

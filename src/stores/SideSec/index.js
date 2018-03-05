@@ -9,7 +9,7 @@ const state = {
 
 const getters = {
   userInfo: state => state.userInfo,
-  loading: state => state.loading,
+  // loading: state => state.loading,
 }
 
 const actions = {

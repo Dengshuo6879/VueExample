@@ -3,7 +3,7 @@ const state = {
 }
 
 const getters = {
-  dialogVisible: state => state.dialogVisible,
+  // dialogVisible: state => state.dialogVisible,
 }
 
 const actions = {

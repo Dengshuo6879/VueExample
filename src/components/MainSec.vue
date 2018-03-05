@@ -1,5 +1,5 @@
 <template>
-    <div class='secDiv' v-loading='$store.state.mainSec.loading'>
+    <div class='secDiv' v-loading='loading'>
         <!-- <div v-for='item of $store.state.mainSec.content' :key='item.id'>
             <router-link :to='{name: "UserRoute",params:{name: item.author.loginname}}'>
                 <img :src='item.author.avatar_url' :title='item.author.loginname'>
@@ -20,21 +20,28 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import MainSecItem  from "./MianSecItem";
+import MainSecItem from "./MianSecItem";
 
 export default {
   name: "MainSection",
   components: {
-        MainSecItem,
-    },
+    MainSecItem
+  },
   computed: {
     ...mapGetters(["item"]),
+    loading: {
+      get: function() {
+        return this.$store.state.mainSec.loading;
+      },
+      set: function(newValue) {
+        this.$store.state.mainSec.loading = newValue;
+      }
+    }
   },
   methods: {
     ...mapActions(["getData", "scrollMethod"])
   },
   mounted() {
-    console.log(this);
     window.addEventListener("scroll", this.scrollMethod);
   },
 

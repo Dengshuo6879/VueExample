@@ -48,7 +48,15 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
-    ...mapGetters(["userInfo", "loading"])
+    ...mapGetters(["userInfo"]),
+    loading:{
+      get:function(){
+        return this.$store.state.userCom.loading;
+      },
+      set:function(newValue){
+        this.$store.state.userCom.loading=newValue;
+      }
+    }
   },
   methods: {
     ...mapActions(["getUser"]),
@@ -62,7 +70,7 @@ export default {
   created() {
     this.getUser(this.$route.path);
   },
-  beforeRouteUpdate(to, from, next) {
+  /* beforeRouteUpdate(to, from, next) {
     this.$http({
       url: `https://cnodejs.org/api/v1${to.path}`,
       method: "get"
@@ -74,11 +82,11 @@ export default {
         console.log("UserCom.vue: ", res);
       });
     next();
-  },
+  }, */
   watch: {
     userInfo(val) {
       if (val) {
-        this.loading = false;
+        
       }
     }
   }

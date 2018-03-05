@@ -9,7 +9,6 @@ const state = {
 
 const getters = {
   userInfo: state => state.userInfo,
-  loading: state => state.loading,
 }
 
 const actions = {
@@ -20,7 +19,7 @@ const mutations = {
   GETUSERINFO(state, {param}){
     const val = param;
     axios({
-      url: `https://cnodejs.org/api/v1${val}`,
+      url: `https://cnodejs.org/api/v1/${val}`,
       method: 'get',
     }).then((res)=>{
       state.userInfo = res.data.data;
@@ -30,7 +29,7 @@ const mutations = {
   }
 }
 
-export const UserCom = {
+export const userCom = {
   state,
   getters,
   actions,

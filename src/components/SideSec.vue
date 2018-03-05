@@ -19,14 +19,22 @@ export default {
   name: "SideSection",
   data() {
     return {
-      name: ""
+      name: "",
     };
   },
   computed: {
-    ...mapGetters(["userInfo","loading"]),
+    ...mapGetters(["userInfo"]),
+    loading: {
+      get: function() {
+        return this.$store.state.sideSec.loading;
+      },
+      set: function(newValue) {
+        this.$store.state.sideSec.loading = newValue;
+      }
+    }
   },
   methods: {
-    ...mapActions(["getUser"]),
+    ...mapActions(["getUser"])
   },
 
   watch: {
