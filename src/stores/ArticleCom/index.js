@@ -17,7 +17,7 @@ const state = {
 
 const getters = {
   article: state => state.article,
-  loading: state => state.loading,
+  // loading: state => state.loading,
 }
 
 const actions = {
@@ -26,6 +26,7 @@ const actions = {
 
 const mutations = {
   GETARTICLE(state, {_this}) {
+    console.log(this)
     state.loading = true;
     axios({
       url: `https://cnodejs.org/api/v1${_this.$route.path}`,

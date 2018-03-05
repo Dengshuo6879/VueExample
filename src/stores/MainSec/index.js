@@ -13,7 +13,7 @@ const getters = {
   content: state => state.content,
   item: state => state.item,
   limit: state => state.limit,
-  loading: state => state.loading,
+  // loading: state => state.loading,
 }
 
 const actions = {
